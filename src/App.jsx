@@ -11,6 +11,7 @@ const App = () => {
 
   const addMedal = (e) => {
     e.preventDefault();
+
     const newMedal = {
       country: country,
       goldMedal: goldMedal,
@@ -20,17 +21,21 @@ const App = () => {
     setMedalList([...medalList, newMedal]);
   };
 
+  const deleteMedal = (country) => {
+    setMedalList(medalList.filter((data) => data.country !== country));
+  };
+
   return (
     <div>
       <h1>CRUD Practice</h1>
       <div className="formContainer">
         <form>
-          <select>
-            <option value={country} onChange={setCountry}>
+          <select value={country} onChange={(e) => setCountry(e.target.value)}>
+            <option disabled value="">
               국가를 선택하세요
             </option>
-            {COUNTRY_LIST.map((country, index) => (
-              <option key={index} value={country}>
+            {COUNTRY_LIST.sort((a, b) => a - b).map((country, index) => (
+              <option key={index} value={country} onChange={setCountry}>
                 {country}
               </option>
             ))}
@@ -79,16 +84,22 @@ const App = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              {medalList.map((medal) => (
-                <tr key={medal.country}>
-                  <td>{medal.country}</td>
-                  <td>{medal.goldMedal}</td>
-                  <td>{medal.silverMedal}</td>
-                  <td>{medal.copperMedal}</td>
-                </tr>
-              ))}
-            </tr>
+            {medalList.map((medal) => (
+              <tr key={medal.country}>
+                <td>{medal.country}</td>
+                <td>{medal.goldMedal}</td>
+                <td>{medal.silverMedal}</td>
+                <td>{medal.copperMedal}</td>
+                <td>
+                  <button
+                    id="MedalDeleteBtn"
+                    onClick={() => deleteMedal(medalList.country)}
+                  >
+                    삭제
+                  </button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
