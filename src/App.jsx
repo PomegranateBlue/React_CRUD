@@ -86,7 +86,9 @@ const App = () => {
           <button type="submit" onClick={addMedal}>
             ADD
           </button>
-          <button type="submit">UPDATE</button>
+          <button type="submit" onClick={(e) => updateMedal(e)}>
+            UPDATE
+          </button>
         </form>
       </div>
       <div className="MedalTable-Container">
