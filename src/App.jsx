@@ -11,7 +11,10 @@ const App = () => {
 
   const addMedal = (e) => {
     e.preventDefault();
-
+    if (medalList.some((data) => data.country === country)) {
+      alert("해당 국가는 존재합니다");
+      return;
+    }
     const newMedal = {
       country: country,
       goldMedal: goldMedal,
@@ -19,6 +22,7 @@ const App = () => {
       copperMedal: copperMedal,
     };
     setMedalList([...medalList, newMedal]);
+    resetForm();
   };
 
   const updateMedal = (e) => {
@@ -28,19 +32,19 @@ const App = () => {
       silverMedal: silverMedal,
       copperMedal: copperMedal,
     };
-    setMedalList(
-      medalList.map((country) =>
-        medalList.country === country
-          ? { ...medalList, ...updateMedal }
-          : medalList
-      )
-    );
+    setMedalList()
+    //업데이트는 해당 국가 선택후
   };
 
   const deleteMedal = (country) => {
     setMedalList(medalList.filter((data) => data.country !== country));
   };
-
+  const resetForm = () => {
+    setCountry("");
+    setGoldMedal(0);
+    setSilverMedal(0);
+    setCopperMedal(0);
+  };
   return (
     <div>
       <h1>CRUD Practice</h1>
@@ -86,7 +90,7 @@ const App = () => {
           <button type="submit" onClick={addMedal}>
             ADD
           </button>
-          <button type="submit" onClick={(e) => updateMedal(e)}>
+          <button type="submit" onClick={updateMedal}>
             UPDATE
           </button>
         </form>
