@@ -21,6 +21,22 @@ const App = () => {
     setMedalList([...medalList, newMedal]);
   };
 
+  const updateMedal = (e) => {
+    e.preventDefault();
+    const updateMedal = {
+      goldMedal: goldMedal,
+      silverMedal: silverMedal,
+      copperMedal: copperMedal,
+    };
+    setMedalList(
+      medalList.map((country) =>
+        medalList.country === country
+          ? { ...medalList, ...updateMedal }
+          : medalList
+      )
+    );
+  };
+
   const deleteMedal = (country) => {
     setMedalList(medalList.filter((data) => data.country !== country));
   };
@@ -93,7 +109,7 @@ const App = () => {
                 <td>
                   <button
                     id="MedalDeleteBtn"
-                    onClick={() => deleteMedal(medalList.country)}
+                    onClick={() => deleteMedal(medal.country)}
                   >
                     삭제
                   </button>
