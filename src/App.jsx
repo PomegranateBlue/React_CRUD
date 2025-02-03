@@ -20,7 +20,7 @@ const App = () => {
     const { name, value } = e.target;
     setInputData((prev) => ({
       ...prev,
-      [name]: name === "country" ? value : parseInt(value, 10),
+      [name]: name === "country" ? value : +value,
     }));
   };
 
@@ -42,8 +42,13 @@ const App = () => {
       copperMedal: 0,
     });
   };
-  const editMedal = (e) => {
-    e.preventDefault();
+  const editMedal = (country) => {
+    if(medal.some((item)=>item.country===country))
+    const editMedal = {
+      goldMedal: inputData.goldMedal,
+      silverMedal: inputData.silverMedal,
+      copperMedal: inputData.copperMedal,
+    };
   };
   const removeMedal = (id) => {
     setMedal(medal.filter((item) => item.id !== id));
@@ -110,7 +115,7 @@ const App = () => {
                 <td>{item.goldMedal}</td>
                 <td>{item.silverMedal}</td>
                 <td>{item.copperMedal}</td>
-                <button onClick={removeMedal}>삭제</button>
+                <button onClick={() => removeMedal(item.id)}>삭제</button>
               </tr>
             ))}
           </tbody>
