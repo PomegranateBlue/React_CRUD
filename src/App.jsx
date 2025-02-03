@@ -9,6 +9,12 @@ const App = () => {
       copperMedal: 3,
     },
   ]);
+  const [inputData, setInputData] = useState({
+    country: "",
+    goldMedal: 0,
+    silverMedal: 0,
+    copperMedal: 0,
+  });
   console.log(medal);
   const handleInput = (e) => {
     const { name, value } = e.target;
@@ -20,6 +26,15 @@ const App = () => {
 
   const addMedal = (e) => {
     e.preventDefault();
+    if (!inputData.country) {
+      alert("국가명을 입력하세요");
+      return;
+    }
+    const newMedal = {
+      id: Date.now(),
+      ...inputData,
+    };
+    setMedal((prev) => [...prev, newMedal]);
   };
   const editMedal = (e) => {
     e.preventDefault();
@@ -30,11 +45,11 @@ const App = () => {
       <div className="form-container">
         <form onSubmit={addMedal}>
           <label>국가명</label>
-          <input type="text" value={medal.country} />
+          <input type="text" value={inputData.country} onChange={handleInput} />
           <label>금메달</label>
           <input
             type="number"
-            value={medal.goldMedal}
+            value={inputData.goldMedal}
             onChange={handleInput}
             min="0"
             max="99"
@@ -42,7 +57,7 @@ const App = () => {
           <label>은메달</label>
           <input
             type="number"
-            value={medal.silverMedal}
+            value={inputData.silverMedal}
             onChange={handleInput}
             min="0"
             max="99"
@@ -50,7 +65,7 @@ const App = () => {
           <label>동메달</label>
           <input
             type="number"
-            value={medal.copperMedal}
+            value={inputData.copperMedal}
             onChange={handleInput}
             min="0"
             max="99"
@@ -74,7 +89,26 @@ const App = () => {
         </form>
       </div>
       <div className="medalList-container">
-        <table></table>
+        <table>
+          <thead>
+            <tr>
+              <th>국가명</th>
+              <th>금메달</th>
+              <th>은메달</th>
+              <th>동메달</th>
+            </tr>
+          </thead>
+          <tbody>
+            {medal.map((item) => (
+              <tr key={item.id}>
+                <td>{item.country}</td>
+                <td>{item.goldMedal}</td>
+                <td>{item.silverMedal}</td>
+                <td>{item.copperMedal}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
